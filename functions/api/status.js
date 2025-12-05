@@ -12,6 +12,8 @@ export async function onRequest(context) {
   const relation = url.searchParams.get('relation') || '???';
   const incident = url.searchParams.get('incident') || '???';
 
+  const factionDisplay = faction === 'ETERNAL ARKIVE' ? 'ETERNAL\nARKIVE' : faction;
+
   const chars = char.split('.');
   const emojis = emoji.split('.');
   const relations = relation.split('.');
