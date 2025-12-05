@@ -18,22 +18,25 @@ export async function onRequest(context) {
   const emojis = emoji.split('.');
   const relations = relation.split('.');
 
-  let relationHtml = '';
+  let relationLines = '';
   for (let i = 0; i < chars.length; i++) {
-    relationHtml += chars[i] + ' | ' + (emojis[i] || '?') + ' | ' + (relations[i] || '???') + '\n';
+    const y = 230 + (i * 20);
+    relationLines += `<text x="230" y="${y}" fill="white" font-size="14" font-family="sans-serif">${chars[i]} | ${emojis[i] || '?'} | ${relations[i] || '???'}</text>`;
   }
 
+  const bgUrl = url.origin + '/status-bg.png';
+
   const svg = `
-    <svg width="1000" height="426" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100%" height="100%" fill="#1a1a2e"/>
+    <svg width="1000" height="426" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <image xlink:href="${bgUrl}" width="1000" height="426"/>
       <text x="45" y="110" fill="white" font-size="22" font-family="sans-serif">${location}</text>
       <text x="327" y="110" fill="white" font-size="22" font-family="sans-serif">${date}</text>
       <text x="472" y="110" fill="white" font-size="22" font-family="sans-serif">${time}</text>
       <text x="620" y="110" fill="white" font-size="22" font-family="sans-serif">${job}</text>
-      <text x="110" y="250" fill="white" font-size="30" font-weight="bold" font-family="sans-serif" text-anchor="middle">${factionDisplay}</text>
+      <text x="110" y="265" fill="white" font-size="30" font-weight="bold" font-family="sans-serif" text-anchor="middle">${factionDisplay}</text>
       <text x="110" y="295" fill="white" font-size="14" font-family="sans-serif" text-anchor="middle">${ability}</text>
-      <text x="230" y="215" fill="white" font-size="14" font-family="sans-serif">${relationHtml}</text>
-      <text x="230" y="375" fill="white" font-size="14" font-family="sans-serif">${incident}</text>
+      ${relationLines}
+      <text x="230" y="390" fill="white" font-size="14" font-family="sans-serif">${incident}</text>
     </svg>
   `;
 
