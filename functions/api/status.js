@@ -12,7 +12,7 @@ export async function onRequest(context) {
   const relation = url.searchParams.get('relation') || '???';
   const incident = url.searchParams.get('incident') || '???';
 
-  const factionDisplay = faction === 'ETERNAL ARKIVE' ? 'ETERNAL ARKIVE' : faction;
+  const factionDisplay = faction === 'ETERNAL ARKIVE' ? 'ETERNAL\nARKIVE' : faction;
 
   const chars = char.split('.');
   const emojis = emoji.split('.');
@@ -20,8 +20,8 @@ export async function onRequest(context) {
 
   let relationLines = '';
   for (let i = 0; i < chars.length; i++) {
-    const y = 230 + (i * 20);
-    relationLines += `<text x="230" y="${y}" fill="white" font-size="14" font-family="Ssaragnun, sans-serif">${chars[i]} | ${emojis[i] || '?'} | ${relations[i] || '???'}</text>`;
+    const y = 460 + (i * 40);
+    relationLines += `<text x="460" y="${y}" fill="white" font-size="28" font-family="'Noto Sans KR', sans-serif" font-weight="200">${chars[i]} | ${emojis[i] || '?'} | ${relations[i] || '???'}</text>`;
   }
 
   const bgUrl = url.origin + '/status-bg.png';
@@ -29,37 +29,29 @@ export async function onRequest(context) {
   const bgBuffer = await bgResponse.arrayBuffer();
   const bgBase64 = btoa(String.fromCharCode(...new Uint8Array(bgBuffer)));
 
-  const fontUrl = url.origin + '/fonts/ssaragnun.otf';
-  const fontResponse = await fetch(fontUrl);
-  const fontBuffer = await fontResponse.arrayBuffer();
-  const fontBase64 = btoa(String.fromCharCode(...new Uint8Array(fontBuffer)));
-
   const svg = `
-    <svg width="1000" height="426" xmlns="http://www.w3.org/2000/svg">
+    <svg width="2000" height="852" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <style>
-          @font-face {
-            font-family: 'Ssaragnun';
-            src: url('data:font/otf;base64,${fontBase64}') format('opentype');
-          }
+          @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200&amp;display=swap');
         </style>
       </defs>
-      <image href="data:image/png;base64,${bgBase64}" width="1000" height="426"/>
-      <text x="42" y="117" fill="white" font-size="22" font-family="Ssaragnun, sans-serif">${location}</text>
-      <text x="327" y="117" fill="white" font-size="22" font-family="Ssaragnun, sans-serif">${date}</text>
-      <text x="472" y="117" fill="white" font-size="22" font-family="Ssaragnun, sans-serif">${time}</text>
-      <text x="620" y="117" fill="white" font-size="22" font-family="Ssaragnun, sans-serif">${job}</text>
-      <text x="110" y="265" fill="white" font-size="30" font-weight="bold" font-family="Ssaragnun, sans-serif" text-anchor="middle">${factionDisplay}</text>
-      <text x="110" y="295" fill="white" font-size="14" font-family="Ssaragnun, sans-serif" text-anchor="middle">${ability}</text>
+      <image href="data:image/png;base64,${bgBase64}" width="2000" height="852"/>
+      <text x="84" y="220" fill="white" font-size="44" font-family="'Noto Sans KR', sans-serif" font-weight="200">${location}</text>
+      <text x="654" y="220" fill="white" font-size="44" font-family="'Noto Sans KR', sans-serif" font-weight="200">${date}</text>
+      <text x="944" y="220" fill="white" font-size="44" font-family="'Noto Sans KR', sans-serif" font-weight="200">${time}</text>
+      <text x="1240" y="220" fill="white" font-size="44" font-family="'Noto Sans KR', sans-serif" font-weight="200">${job}</text>
+      <text x="220" y="500" fill="white" font-size="60" font-family="'Noto Sans KR', sans-serif" font-weight="200" text-anchor="middle">${factionDisplay}</text>
+      <text x="220" y="574" fill="white" font-size="30" font-family="'Noto Sans KR', sans-serif" font-weight="200" text-anchor="middle">${ability}</text>
       ${relationLines}
-      <text x="230" y="390" fill="white" font-size="14" font-family="Ssaragnun, sans-serif">${incident}</text>
+      <text x="460" y="780" fill="white" font-size="28" font-family="'Noto Sans KR', sans-serif" font-weight="200">${incident}</text>
     </svg>
   `;
 
   return new Response(svg, {
     headers: {
       'Content-Type': 'image/svg+xml',
-      'Cache-Control': 'public, max-age=60',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
     },
   });
 }
