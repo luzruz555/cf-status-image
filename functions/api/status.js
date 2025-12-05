@@ -25,10 +25,13 @@ export async function onRequest(context) {
   }
 
   const bgUrl = url.origin + '/status-bg.png';
+  const bgResponse = await fetch(bgUrl);
+  const bgBuffer = await bgResponse.arrayBuffer();
+  const bgBase64 = btoa(String.fromCharCode(...new Uint8Array(bgBuffer)));
 
   const svg = `
-    <svg width="1000" height="426" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-      <image xlink:href="${bgUrl}" width="1000" height="426"/>
+    <svg width="1000" height="426" xmlns="http://www.w3.org/2000/svg">
+      <image href="data:image/png;base64,${bgBase64}" width="1000" height="426"/>
       <text x="45" y="110" fill="white" font-size="22" font-family="sans-serif">${location}</text>
       <text x="327" y="110" fill="white" font-size="22" font-family="sans-serif">${date}</text>
       <text x="472" y="110" fill="white" font-size="22" font-family="sans-serif">${time}</text>
