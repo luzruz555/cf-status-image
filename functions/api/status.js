@@ -1,5 +1,4 @@
-import { Resvg } from '@resvg/resvg-wasm';
-import resvgWasm from '@resvg/resvg-wasm/index_bg.wasm';
+import { Resvg, initWasm } from '@resvg/resvg-wasm';
 
 let wasmInitialized = false;
 
@@ -55,7 +54,7 @@ export async function onRequest(context) {
 
   try {
     if (!wasmInitialized) {
-      await Resvg.initWasm(resvgWasm);
+      await initWasm();
       wasmInitialized = true;
     }
 
