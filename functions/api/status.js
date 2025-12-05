@@ -37,14 +37,14 @@ export async function onRequest(context) {
         </style>
       </defs>
       <image href="data:image/png;base64,${bgBase64}" width="2000" height="852"/>
-      <text x="68" y="240" fill="white" font-size="44" font-family="'Noto Sans KR', sans-serif" font-weight="200">${location}</text>
+      <text x="58" y="240" fill="white" font-size="44" font-family="'Noto Sans KR', sans-serif" font-weight="200">${location}</text>
       <text x="654" y="240" fill="white" font-size="44" font-family="'Noto Sans KR', sans-serif" font-weight="200">${date}</text>
-      <text x="944" y="240" fill="white" font-size="44" font-family="'Noto Sans KR', sans-serif" font-weight="200">${time}</text>
-      <text x="1240" y="240" fill="white" font-size="44" font-family="'Noto Sans KR', sans-serif" font-weight="200">${job}</text>
+      <text x="949" y="240" fill="white" font-size="44" font-family="'Noto Sans KR', sans-serif" font-weight="200">${time}</text>
+      <text x="1245" y="240" fill="white" font-size="44" font-family="'Noto Sans KR', sans-serif" font-weight="200">${job}</text>
       <text x="220" y="520" fill="white" font-size="60" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${factionDisplay}</text>
       <text x="220" y="594" fill="white" font-size="30" font-family="'Noto Sans KR', sans-serif" font-weight="200" text-anchor="middle">${ability}</text>
       ${relationLines}
-      <text x="460" y="775" fill="white" font-size="28" font-family="'Noto Sans KR', sans-serif" font-weight="200">${incident}</text>
+      <text x="460" y="775" fill="white" font-size="35" font-family="'Noto Sans KR', sans-serif" font-weight="200">${incident}</text>
     </svg>
   `;
 
