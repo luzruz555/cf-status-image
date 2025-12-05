@@ -1,3 +1,8 @@
+import { Resvg } from '@resvg/resvg-wasm';
+import resvgWasm from '@resvg/resvg-wasm/index_bg.wasm';
+
+let wasmInitialized = false;
+
 export async function onRequest(context) {
   const url = new URL(context.request.url);
 
@@ -12,7 +17,7 @@ export async function onRequest(context) {
   const relation = url.searchParams.get('relation') || '???';
   const incident = url.searchParams.get('incident') || '???';
 
-  const factionDisplay = faction === 'ETERNAL ARKIVE' ? 'ETERNAL\nARKIVE' : faction;
+  const factionDisplay = faction === 'ETERNAL ARKIVE' ? 'ETERNAL ARKIVE' : faction;
 
   const chars = char.split('.');
   const emojis = emoji.split('.');
@@ -48,10 +53,26 @@ export async function onRequest(context) {
     </svg>
   `;
 
-  return new Response(svg, {
-    headers: {
-      'Content-Type': 'image/svg+xml',
-      'Cache-Control': 'no-cache, no-store, must-revalidate',
-    },
-  });
+  try {
+    if (!wasmInitialized) {
+      await Resvg.initWasm(resvgWasm);
+      wasmInitialized = true;
+    }
+
+    const resvg = new Resvg(svg, {
+      fitTo: { mode: 'width', value: 2000 },
+    });
+
+    const pngData = resvg.render();
+    const pngBuffer = pngData.asPng();
+
+    return new Response(pngBuffer, {
+      headers: {
+        'Content-Type': 'image/png',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+      },
+    });
+  } catch (e) {
+    return new Response('Error: ' + e.message, { status: 500 });
+  }
 }
