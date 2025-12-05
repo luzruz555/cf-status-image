@@ -1,7 +1,3 @@
-import { Resvg, initWasm } from '@resvg/resvg-wasm';
-
-let wasmInitialized = false;
-
 export async function onRequest(context) {
   const url = new URL(context.request.url);
 
@@ -52,26 +48,10 @@ export async function onRequest(context) {
     </svg>
   `;
 
-  try {
-    if (!wasmInitialized) {
-      await initWasm();
-      wasmInitialized = true;
-    }
-
-    const resvg = new Resvg(svg, {
-      fitTo: { mode: 'width', value: 2000 },
-    });
-
-    const pngData = resvg.render();
-    const pngBuffer = pngData.asPng();
-
-    return new Response(pngBuffer, {
-      headers: {
-        'Content-Type': 'image/png',
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-      },
-    });
-  } catch (e) {
-    return new Response('Error: ' + e.message, { status: 500 });
-  }
+  return new Response(svg, {
+    headers: {
+      'Content-Type': 'image/svg+xml',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+    },
+  });
 }
