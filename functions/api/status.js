@@ -51,7 +51,7 @@ export async function onRequest(context) {
   return new Response(svg, {
     headers: {
       'Content-Type': 'image/svg+xml',
-      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Cache-Control': 'public, max-age=300',
     },
   });
 }
