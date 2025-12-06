@@ -27,9 +27,9 @@ export async function onRequest(context) {
     } else {
       x = 820;
       y = 460 + ((i - 5) * 40);
-    }
-    relationLines += `<text x="${x}" y="${y}" fill="white" font-size="28" font-family="'Noto Sans KR', sans-serif" font-weight="200">${chars[i]} | ${emojis[i] || '?'} | ${relations[i] || '???'}</text>`;
-  }
+    }const charName = chars[i].length > 3 ? chars[i].substring(0, 6) + '..' : chars[i];
+const rel = (relations[i] || '???').length > 8 ? (relations[i] || '???').substring(0, 10) + '..' : (relations[i] || '???');
+relationLines += `<text x="${x}" y="${y}" fill="white" font-size="28" font-family="'Noto Sans KR', sans-serif" font-weight="200">${charName} | ${emojis[i] || '?'} | ${rel}</text>`;
 
   const bgUrl = url.origin + '/status-bg.png';
   const bgResponse = await fetch(bgUrl);
