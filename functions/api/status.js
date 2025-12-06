@@ -20,8 +20,15 @@ export async function onRequest(context) {
 
   let relationLines = '';
   for (let i = 0; i < chars.length; i++) {
-    const y = 460 + (i * 40);
-    relationLines += `<text x="460" y="${y}" fill="white" font-size="28" font-family="'Noto Sans KR', sans-serif" font-weight="200">${chars[i]} | ${emojis[i] || '?'} | ${relations[i] || '???'}</text>`;
+    let x, y;
+    if (i < 5) {
+      x = 460;
+      y = 460 + (i * 40);
+    } else {
+      x = 900;
+      y = 460 + ((i - 5) * 40);
+    }
+    relationLines += `<text x="${x}" y="${y}" fill="white" font-size="28" font-family="'Noto Sans KR', sans-serif" font-weight="200">${chars[i]} | ${emojis[i] || '?'} | ${relations[i] || '???'}</text>`;
   }
 
   const bgUrl = url.origin + '/status-bg.png';
