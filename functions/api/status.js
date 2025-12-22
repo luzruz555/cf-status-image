@@ -37,21 +37,21 @@ relationLines += `<text x="${x}" y="${y}" fill="white" font-size="28" font-famil
   const bgBase64 = btoa(String.fromCharCode(...new Uint8Array(bgBuffer)));
 
   const svg = `
-    <svg width="2000" height="852" xmlns="http://www.w3.org/2000/svg">
+    <svg width="1000" height="426" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <style>
           @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;700&amp;display=swap');
         </style>
       </defs>
       <image href="data:image/png;base64,${bgBase64}" width="2000" height="852"/>
-      <text x="58" y="240" fill="white" font-size="44" font-family="'Noto Sans KR', sans-serif" font-weight="200">${location}</text>
-      <text x="654" y="240" fill="white" font-size="44" font-family="'Noto Sans KR', sans-serif" font-weight="200">${date}</text>
-      <text x="949" y="240" fill="white" font-size="44" font-family="'Noto Sans KR', sans-serif" font-weight="200">${time}</text>
-      <text x="1245" y="240" fill="white" font-size="44" font-family="'Noto Sans KR', sans-serif" font-weight="200">${job}</text>
-      <text x="220" y="520" fill="white" font-size="60" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${factionDisplay}</text>
-      <text x="220" y="594" fill="white" font-size="30" font-family="'Noto Sans KR', sans-serif" font-weight="200" text-anchor="middle">${ability}</text>
+      <text x="29" y="120" fill="white" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="200">${location}</text>
+      <text x="327" y="120" fill="white" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="200">${date}</text>
+      <text x="475" y="120" fill="white" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="200">${time}</text>
+      <text x="623" y="120" fill="white" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="200">${job}</text>
+      <text x="110" y="260" fill="white" font-size="30" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${factionDisplay}</text>
+      <text x="110" y="297" fill="white" font-size="15" font-family="'Noto Sans KR', sans-serif" font-weight="200" text-anchor="middle">${ability}</text>
       ${relationLines}
-      <text x="460" y="775" fill="white" font-size="35" font-family="'Noto Sans KR', sans-serif" font-weight="200">${incident}</text>
+      <text x="230" y="388" fill="white" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="200">${incident}</text>
     </svg>
   `;
 
