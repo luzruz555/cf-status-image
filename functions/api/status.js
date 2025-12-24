@@ -45,7 +45,7 @@ export async function onRequest(context) {
           @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;700&amp;display=swap');
         </style>
       </defs>
-      <image href="data:image/png;base64,${bgBase64}" width="1024" height="436"/>
+      <image href="data:image/png;base64,${bgBase64}" width="1200" height="628"/>
       <text x="30" y="123" fill="white" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="200">${location}</text>
       <text x="335" y="123" fill="white" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="200">${date}</text>
       <text x="485" y="123" fill="white" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="200">${time}</text>
