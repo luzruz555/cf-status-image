@@ -27,9 +27,11 @@ export async function onRequest(context) {
     } else {
       x = 820;
       y = 460 + ((i - 5) * 40);
-    }const charName = chars[i].length > 3 ? chars[i].substring(0, 6) + '..' : chars[i];
-const rel = (relations[i] || '???').length > 8 ? (relations[i] || '???').substring(0, 10) + '..' : (relations[i] || '???');
-relationLines += `<text x="${x}" y="${y}" fill="white" font-size="28" font-family="'Noto Sans KR', sans-serif" font-weight="200">${charName} | ${emojis[i] || '?'} | ${rel}</text>`;
+    }
+    const charName = chars[i].length > 6 ? chars[i].substring(0, 6) + '..' : chars[i];
+    const rel = (relations[i] || '???').length > 10 ? (relations[i] || '???').substring(0, 10) + '..' : (relations[i] || '???');
+    relationLines += `<text x="${x}" y="${y}" fill="white" font-size="28" font-family="'Noto Sans KR', sans-serif" font-weight="200">${charName} | ${emojis[i] || '?'} | ${rel}</text>`;
+  }
 
   const bgUrl = url.origin + '/status-bg.png';
   const bgResponse = await fetch(bgUrl);
@@ -46,12 +48,12 @@ relationLines += `<text x="${x}" y="${y}" fill="white" font-size="28" font-famil
       <image href="data:image/png;base64,${bgBase64}" width="1000" height="426"/>
       <text x="29" y="120" fill="white" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="200">${location}</text>
       <text x="327" y="120" fill="white" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="200">${date}</text>
-      <text x="475" y="120" fill="white" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="200">${time}</text>
-      <text x="623" y="120" fill="white" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="200">${job}</text>
+      <text x="474" y="120" fill="white" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="200">${time}</text>
+      <text x="622" y="120" fill="white" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="200">${job}</text>
       <text x="110" y="260" fill="white" font-size="30" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${factionDisplay}</text>
       <text x="110" y="297" fill="white" font-size="15" font-family="'Noto Sans KR', sans-serif" font-weight="200" text-anchor="middle">${ability}</text>
       ${relationLines}
-      <text x="230" y="388" fill="white" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="200">${incident}</text>
+      <text x="230" y="387" fill="white" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="200">${incident}</text>
     </svg>
   `;
 
