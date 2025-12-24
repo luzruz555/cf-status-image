@@ -23,14 +23,14 @@ for (let i = 0; i < chars.length; i++) {
   let x, y;
   if (i < 5) {
     x = 230;
-    y = 270 + (i * 25);
+    y = 250 + (i * 25);
   } else {
     x = 500;
-    y = 270 + ((i - 5) * 25);
+    y = 250 + ((i - 5) * 25);
   }
   const charName = chars[i].length > 6 ? chars[i].substring(0, 6) + '..' : chars[i];
   const rel = (relations[i] || '???').length > 10 ? (relations[i] || '???').substring(0, 10) + '..' : (relations[i] || '???');
-  relationLines += `<text x="${x}" y="${y}" fill="white" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="200">${charName} | ${emojis[i] || '?'} | ${rel}</text>`;
+  relationLines += `<text x="${x}" y="${y}" fill="white" font-size="15" font-family="'Noto Sans KR', sans-serif" font-weight="200">${charName} | ${emojis[i] || '?'} | ${rel}</text>`;
 }
 
   const bgUrl = url.origin + '/status-bg.png';
@@ -39,7 +39,7 @@ for (let i = 0; i < chars.length; i++) {
   const bgBase64 = btoa(String.fromCharCode(...new Uint8Array(bgBuffer)));
 
   const svg = `
-    <svg width="1024" height="436" xmlns="http://www.w3.org/2000/svg">
+    <svg width="1024" height="436" viewBox="0 0 1024 436" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <style>
           @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;700&amp;display=swap');
