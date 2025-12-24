@@ -23,10 +23,10 @@ for (let i = 0; i < chars.length; i++) {
   let x, y;
   if (i < 5) {
     x = 230;
-    y = 250 + (i * 25);
+    y = 230 + (i * 25);
   } else {
     x = 500;
-    y = 250 + ((i - 5) * 25);
+    y = 230 + ((i - 5) * 25);
   }
   const charName = chars[i].length > 6 ? chars[i].substring(0, 6) + '..' : chars[i];
   const rel = (relations[i] || '???').length > 10 ? (relations[i] || '???').substring(0, 10) + '..' : (relations[i] || '???');
