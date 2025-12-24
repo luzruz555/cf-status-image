@@ -43,7 +43,7 @@ relationLines += `<text x="${x}" y="${y}" fill="white" font-size="28" font-famil
           @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;700&amp;display=swap');
         </style>
       </defs>
-      <image href="data:image/png;base64,${bgBase64}" width="1000" height="476"/>
+      <image href="data:image/png;base64,${bgBase64}" width="1000" height="426"/>
       <text x="29" y="120" fill="white" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="200">${location}</text>
       <text x="327" y="120" fill="white" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="200">${date}</text>
       <text x="475" y="120" fill="white" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="200">${time}</text>
