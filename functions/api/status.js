@@ -19,19 +19,19 @@ export async function onRequest(context) {
   const relations = relation.split('.');
 
   let relationLines = '';
-  for (let i = 0; i < chars.length; i++) {
-    let x, y;
-    if (i < 5) {
-      x = 471;
-      y = 471 + (i * 41);
-    } else {
-      x = 840;
-      y = 471 + ((i - 5) * 41);
-    }
-    const charName = chars[i].length > 6 ? chars[i].substring(0, 6) + '..' : chars[i];
-    const rel = (relations[i] || '???').length > 10 ? (relations[i] || '???').substring(0, 10) + '..' : (relations[i] || '???');
-    relationLines += `<text x="${x}" y="${y}" fill="white" font-size="28" font-family="'Noto Sans KR', sans-serif" font-weight="200">${charName} | ${emojis[i] || '?'} | ${rel}</text>`;
+for (let i = 0; i < chars.length; i++) {
+  let x, y;
+  if (i < 5) {
+    x = 230;
+    y = 270 + (i * 25);
+  } else {
+    x = 500;
+    y = 270 + ((i - 5) * 25);
   }
+  const charName = chars[i].length > 6 ? chars[i].substring(0, 6) + '..' : chars[i];
+  const rel = (relations[i] || '???').length > 10 ? (relations[i] || '???').substring(0, 10) + '..' : (relations[i] || '???');
+  relationLines += `<text x="${x}" y="${y}" fill="white" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="200">${charName} | ${emojis[i] || '?'} | ${rel}</text>`;
+}
 
   const bgUrl = url.origin + '/status-bg.png';
   const bgResponse = await fetch(bgUrl);
