@@ -21,10 +21,10 @@ export async function onRequest(context) {
   for (let i = 0; i < chars.length; i++) {
     let x, y;
     if (i < 7) {
-      x = 570;
+      x = 568;
       y = 350 + (i * 22);
     } else {
-      x = 790;
+      x = 788;
       y = 350 + ((i - 7) * 22);
     }
     const charName = chars[i].length > 6 ? chars[i].substring(0, 6) + '..' : chars[i];
@@ -51,11 +51,11 @@ export async function onRequest(context) {
       
       <!-- 왼쪽 상단: LOC, DATE, TIME -->
       <text x="130" y="60" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${location}</text>
-      <text x="130" y="86" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${date}</text>
-      <text x="130" y="112" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${time}</text>
+      <text x="130" y="87" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${date}</text>
+      <text x="130" y="114" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${time}</text>
       
       <!-- 왼쪽 박스: FACTION -->
-      <text x="145" y="260" fill="white" font-size="27" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle" fill-opacity="0.85">${faction}</text>
+      <text x="145" y="265" fill="white" font-size="30" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle" fill-opacity="0.85">${faction}</text>
       
       <!-- 오른쪽 상단: OCCUPATION, ABILITY, INCIDENT -->
       <text x="605" y="83" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${occupation}</text>
