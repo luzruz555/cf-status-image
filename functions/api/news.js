@@ -11,9 +11,10 @@ export async function onRequest(context) {
   const commentsRaw = url.searchParams.get('c') || '';
   const comments = [];
   
+  // 댓글 파싱 - 최대 4개로 변경
   if (commentsRaw) {
     const items = commentsRaw.split('/./');
-    for (let i = 0; i < Math.min(items.length, 5); i++) {
+    for (let i = 0; i < Math.min(items.length, 4); i++) {
       const parts = items[i].split('|');
       comments.push({
         name: parts[0] || '',
@@ -60,11 +61,11 @@ export async function onRequest(context) {
     return lines;
   }
 
-  // 본문 SVG 생성
-  const contentLines = wrapText(content, 900);
+  // 본문 SVG 생성 - maxWidth 늘림
+  const contentLines = wrapText(content, 1100);
   let contentSvg = '';
   for (let i = 0; i < contentLines.length; i++) {
-    contentSvg += `<text x="100" y="${360 + (i * 38)}" fill="${textColor}" font-size="28" font-family="'Noto Sans KR', sans-serif" font-weight="400">${contentLines[i]}</text>`;
+    contentSvg += `<text x="80" y="${380 + (i * 38)}" fill="${textColor}" font-size="28" font-family="'Noto Sans KR', sans-serif" font-weight="400">${contentLines[i]}</text>`;
   }
 
   // 댓글 생성 함수
@@ -98,7 +99,7 @@ export async function onRequest(context) {
   }
 
   // 댓글 SVG 생성
-  let commentsY = 780;
+  let commentsY = 820;
   let commentsSvg = '';
   for (let i = 0; i < comments.length; i++) {
     const c = comments[i];
@@ -132,10 +133,10 @@ export async function onRequest(context) {
       <image href="data:image/png;base64,${bgBase64}" width="2048" height="1152"/>
       
       <!-- 제목 -->
-      <text x="100" y="250" fill="${textColor}" font-size="40" font-family="'Noto Sans KR', sans-serif" font-weight="700">${title}</text>
+      <text x="80" y="270" fill="${textColor}" font-size="40" font-family="'Noto Sans KR', sans-serif" font-weight="700">${title}</text>
       
       <!-- 날짜 + 작성기자 -->
-      <text x="100" y="300" fill="${textColor}" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="400">${date} 작성기자| ${reporter}</text>
+      <text x="80" y="320" fill="${textColor}" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="400">${date} 작성기자| ${reporter}</text>
       
       <!-- 본문 -->
       ${contentSvg}
