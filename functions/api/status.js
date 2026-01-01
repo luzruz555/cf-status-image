@@ -21,10 +21,10 @@ export async function onRequest(context) {
   for (let i = 0; i < chars.length; i++) {
     let x, y;
     if (i < 7) {
-      x = 585;
+      x = 578;
       y = 350 + (i * 22);
     } else {
-      x = 720;
+      x = 798;
       y = 350 + ((i - 7) * 22);
     }
     const charName = chars[i].length > 6 ? chars[i].substring(0, 6) + '..' : chars[i];
@@ -50,17 +50,17 @@ export async function onRequest(context) {
       <image href="data:image/png;base64,${bgBase64}" width="1024" height="512"/>
       
       <!-- 왼쪽 상단: LOC, DATE, TIME -->
-      <text x="125" y="50" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${location}</text>
-      <text x="125" y="76" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${date}</text>
-      <text x="125" y="76" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${time}</text>
+      <text x="125" y="55" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${location}</text>
+      <text x="125" y="81" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${date}</text>
+      <text x="125" y="107" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${time}</text>
       
       <!-- 왼쪽 박스: FACTION -->
-      <text x="145" y="255" fill="white" font-size="25" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${faction}</text>
+      <text x="145" y="258" fill="white" font-size="27" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${faction}</text>
       
       <!-- 오른쪽 상단: OCCUPATION, ABILITY, INCIDENT -->
-      <text x="600" y="75" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${occupation}</text>
-      <text x="600" y="130" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${ability}</text>
-      <text x="600" y="185" fill="white" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400">${incident}</text>      
+      <text x="605" y="77" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${occupation}</text>
+      <text x="605" y="132" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${ability}</text>
+      <text x="605" y="187" fill="white" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400">${incident}</text>      
       <!-- 오른쪽 하단: RELATIONSHIP -->
       ${relationLines}
     </svg>
