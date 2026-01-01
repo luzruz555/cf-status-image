@@ -50,12 +50,12 @@ export async function onRequest(context) {
       <image href="data:image/png;base64,${bgBase64}" width="1024" height="512"/>
       
       <!-- 왼쪽 상단: LOC, DATE, TIME -->
-      <text x="115" y="42" fill="white" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${location}</text>
-      <text x="115" y="68" fill="white" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${date}</text>
-      <text x="115" y="94" fill="white" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${time}</text>
+      <text x="125" y="50" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${location}</text>
+      <text x="125" y="76" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${date}</text>
+      <text x="125" y="76" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${time}</text>
       
       <!-- 왼쪽 박스: FACTION -->
-      <text x="145" y="260" fill="white" font-size="20" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${faction}</text>
+      <text x="145" y="255" fill="white" font-size="25" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${faction}</text>
       
       <!-- 오른쪽 상단: OCCUPATION, ABILITY, INCIDENT -->
       <text x="615" y="45" fill="white" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${occupation}</text>
