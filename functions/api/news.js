@@ -75,7 +75,7 @@ export async function onRequest(context) {
   let commentsSvg = '';
   for (let i = 0; i < comments.length; i++) {
     const c = comments[i];
-    commentsSvg += createComment(c.name, c.text, c.like, c.dislike, c.reply, commentsY + (i * 57));
+    commentsSvg += createComment(c.name, c.text, c.like, c.dislike, c.reply, commentsY + (i * 63));
   }
 
   // 배경 이미지 로드
