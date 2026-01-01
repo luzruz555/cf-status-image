@@ -96,16 +96,16 @@ export async function onRequest(context) {
       <image href="data:image/png;base64,${bgBase64}" width="1024" height="2048"/>
       
       <!-- 제목 -->
-      <text x="95" y="500" fill="${textColor}" font-size="51" font-family="'Noto Sans KR', sans-serif" font-weight="700">${title}</text>
+      <text x="95" y="480" fill="${textColor}" font-size="51" font-family="'Noto Sans KR', sans-serif" font-weight="700">${title}</text>
       
       <!-- 날짜 -->
-      <text x="750" y="470" fill="${textColor}" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400">${date}</text>
+      <text x="750" y="450" fill="${textColor}" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400">${date}</text>
       
       <!-- 작성 기자 -->
-      <text x="750" y="500" fill="${textColor}" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400">작성 기자: ${reporter}</text>
+      <text x="750" y="480" fill="${textColor}" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400">작성 기자: ${reporter}</text>
       
       <!-- 본문 -->
-      <text x="95" y="590" fill="${textColor}" font-size="21" font-family="'Noto Sans KR', sans-serif" font-weight="400">${content}</text>
+      <text x="95" y="570" fill="${textColor}" font-size="21" font-family="'Noto Sans KR', sans-serif" font-weight="400">${content}</text>
       
       <!-- 댓글 섹션 -->
       ${commentsSvg}
