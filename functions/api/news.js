@@ -12,7 +12,7 @@ export async function onRequest(context) {
   const comments = [];
   
   if (commentsRaw) {
-    const items = commentsRaw.split('.');
+    const items = commentsRaw.split('/./');
     for (let i = 0; i < Math.min(items.length, 6); i++) {
       const parts = items[i].split('|');
       comments.push({
