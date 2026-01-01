@@ -99,7 +99,7 @@ export async function onRequest(context) {
   }
 
   // 댓글 SVG 생성
-  let commentsY = 877;
+  let commentsY = 874;
   let commentsSvg = '';
   for (let i = 0; i < comments.length; i++) {
     const c = comments[i];
