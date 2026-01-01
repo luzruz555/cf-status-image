@@ -71,7 +71,7 @@ export async function onRequest(context) {
   }
 
   // 댓글 SVG 생성
-  let commentsY = 1540;
+  let commentsY = 1550;
   let commentsSvg = '';
   for (let i = 0; i < comments.length; i++) {
     const c = comments[i];
@@ -105,7 +105,7 @@ export async function onRequest(context) {
       <text x="750" y="480" fill="${textColor}" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400">작성 기자: ${reporter}</text>
       
       <!-- 본문 -->
-      <text x="95" y="570" fill="${textColor}" font-size="21" font-family="'Noto Sans KR', sans-serif" font-weight="400">${content}</text>
+      <text x="95" y="555" fill="${textColor}" font-size="21" font-family="'Noto Sans KR', sans-serif" font-weight="400">${content}</text>
       
       <!-- 댓글 섹션 -->
       ${commentsSvg}
