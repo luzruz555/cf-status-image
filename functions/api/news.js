@@ -126,7 +126,7 @@ export async function onRequest(context) {
       <text x="95" y="480" fill="${textColor}" font-size="51" font-family="'Noto Sans KR', sans-serif" font-weight="700">${title}</text>
       
       <!-- 날짜 + 작성기자 (한 줄) -->
-      <text x="700" y="530" fill="${textColor}" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${date} 작성기자| ${reporter}</text>
+      <text x="720" y="530" fill="${textColor}" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${date} 작성기자| ${reporter}</text>
       
       <!-- 본문 -->
       ${contentSvg}
