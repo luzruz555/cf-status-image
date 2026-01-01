@@ -50,17 +50,17 @@ export async function onRequest(context) {
       <image href="data:image/png;base64,${bgBase64}" width="1024" height="512"/>
       
       <!-- 왼쪽 상단: LOC, DATE, TIME -->
-      <text x="95" y="45" fill="#00FFFF" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${location}</text>
-      <text x="95" y="70" fill="#00FFFF" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${date}</text>
-      <text x="95" y="95" fill="#00FFFF" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${time}</text>
+      <text x="95" y="45" fill="#FFFFFF" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${location}</text>
+      <text x="95" y="70" fill="#FFFFFF" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${date}</text>
+      <text x="95" y="95" fill="#FFFFFF" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${time}</text>
       
       <!-- 왼쪽 박스: FACTION -->
-      <text x="145" y="295" fill="#00FFFF" font-size="20" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${faction}</text>
+      <text x="145" y="295" fill="#FFFFFF" font-size="20" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${faction}</text>
       
       <!-- 오른쪽 상단: OCCUPATION, ABILITY, INCIDENT -->
-      <text x="600" y="55" fill="#00FFFF" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${occupation}</text>
-      <text x="600" y="105" fill="#00FFFF" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${ability}</text>
-      <text x="600" y="165" fill="#00FFFF" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${incident}</text>
+      <text x="600" y="55" fill="#FFFFFF" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${occupation}</text>
+      <text x="600" y="105" fill="#FFFFFF" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${ability}</text>
+      <text x="600" y="165" fill="#FFFFFF" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${incident}</text>
       
       <!-- 오른쪽 하단: RELATIONSHIP -->
       ${relationLines}
