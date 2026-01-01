@@ -58,9 +58,9 @@ export async function onRequest(context) {
       <text x="145" y="255" fill="white" font-size="25" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${faction}</text>
       
       <!-- 오른쪽 상단: OCCUPATION, ABILITY, INCIDENT -->
-      <text x="615" y="45" fill="white" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${occupation}</text>
-      <text x="615" y="100" fill="white" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${ability}</text>
-      <text x="615" y="160" fill="white" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${incident}</text>      
+      <text x="605" y="75" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${occupation}</text>
+      <text x="605" y="130" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${ability}</text>
+      <text x="605" y="185" fill="white" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400">${incident}</text>      
       <!-- 오른쪽 하단: RELATIONSHIP -->
       ${relationLines}
     </svg>
