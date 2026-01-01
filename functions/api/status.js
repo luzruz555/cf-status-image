@@ -20,15 +20,15 @@ export async function onRequest(context) {
   let relationLines = '';
   for (let i = 0; i < chars.length; i++) {
     let x, y;
-    if (i < 5) {
-      x = 600;
-      y = 370 + (i * 22);
+    if (i < 7) {
+      x = 585;
+      y = 350 + (i * 22);
     } else {
-      x = 820;
-      y = 370 + ((i - 5) * 22);
+      x = 720;
+      y = 350 + ((i - 7) * 22);
     }
     const charName = chars[i].length > 6 ? chars[i].substring(0, 6) + '..' : chars[i];
-    const rel = (relations[i] || '???').length > 8 ? (relations[i] || '???').substring(0, 8) + '..' : (relations[i] || '???');
+    const rel = (relations[i] || '???').length > 10 ? (relations[i] || '???').substring(0, 8) + '..' : (relations[i] || '???');
     relationLines += `<text x="${x}" y="${y}" fill="white" font-size="16" font-family="'Noto Sans KR', sans-serif" font-weight="400">${charName} | ${emojis[i] || '?'} | ${rel}</text>`;
   }
 
@@ -58,9 +58,9 @@ export async function onRequest(context) {
       <text x="145" y="255" fill="white" font-size="25" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${faction}</text>
       
       <!-- 오른쪽 상단: OCCUPATION, ABILITY, INCIDENT -->
-      <text x="605" y="75" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${occupation}</text>
-      <text x="605" y="130" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${ability}</text>
-      <text x="605" y="185" fill="white" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400">${incident}</text>      
+      <text x="600" y="75" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${occupation}</text>
+      <text x="600" y="130" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${ability}</text>
+      <text x="600" y="185" fill="white" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400">${incident}</text>      
       <!-- 오른쪽 하단: RELATIONSHIP -->
       ${relationLines}
     </svg>
