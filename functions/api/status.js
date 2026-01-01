@@ -51,16 +51,16 @@ export async function onRequest(context) {
       
       <!-- 왼쪽 상단: LOC, DATE, TIME -->
       <text x="130" y="60" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${location}</text>
-      <text x="130" y="90" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${date}</text>
-      <text x="130" y="120" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${time}</text>
+      <text x="130" y="88" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${date}</text>
+      <text x="130" y="116" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${time}</text>
       
       <!-- 왼쪽 박스: FACTION -->
-      <text x="145" y="265" fill="white" font-size="30" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle" fill-opacity="0.85">${faction}</text>
+      <text x="145" y="270" fill="white" font-size="30" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle" fill-opacity="0.85">${faction}</text>
       
       <!-- 오른쪽 상단: OCCUPATION, ABILITY, INCIDENT -->
       <text x="605" y="83" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${occupation}</text>
       <text x="605" y="135" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${ability}</text>
-      <text x="605" y="187" fill="white" font-size="18.5" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${incident}</text>      
+      <text x="605" y="190" fill="white" font-size="18.5" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${incident}</text>      
       <!-- 오른쪽 하단: RELATIONSHIP -->
       ${relationLines}
     </svg>
