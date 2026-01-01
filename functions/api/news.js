@@ -80,7 +80,7 @@ export async function onRequest(context) {
     
     let likeText = '';
     if (!isReply && (like || dislike)) {
-      likeText = `<text x="${145 + offsetX}" y="${y + 38}" fill="${displayColor}" font-size="14" font-family="'Noto Sans KR', sans-serif" font-weight="400">👍 ${like || '0'} · 👎 ${dislike || '0'}</text>`;
+      likeText = `<text x="${145 + offsetX}" y="${y + 38}" fill="${displayColor}" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400">👍 ${like || '0'} · 👎 ${dislike || '0'}</text>`;
     }
     
     let arrow = '';
