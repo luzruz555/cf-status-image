@@ -1,51 +1,35 @@
 export async function onRequest(context) {
   const url = new URL(context.request.url);
 
-  // 1. 안전한 파라미터 수신 및 디코딩 헬퍼
-  const getSafeParam = (key, defaultValue) => {
-    let value = url.searchParams.get(key);
-    if (!value) return defaultValue;
-    try {
-      value = decodeURIComponent(value);
-      if (value.includes('%')) value = decodeURIComponent(value);
-    } catch (e) { /* ignore */ }
-    return value;
-  };
+  // 기본 정보
+  const title = url.searchParams.get('title') || '제목 없음';
+  const date = url.searchParams.get('date') || '3125.??.??';
+  const reporter = url.searchParams.get('reporter') || '???';
+  const content = url.searchParams.get('content') || '본문 없음';
 
-  // 2. XML 특수문자 이스케이프 (깨짐 방지 핵심)
-  const escapeXml = (unsafe) => {
-    return String(unsafe).replace(/&/g, '&amp;')
-                 .replace(/</g, '&lt;')
-                 .replace(/>/g, '&gt;')
-                 .replace(/"/g, '&quot;')
-                 .replace(/'/g, '&apos;');
-  };
-
-  const title = escapeXml(getSafeParam('title', '제목 없음'));
-  const date = escapeXml(getSafeParam('date', '3125.??.??'));
-  const reporter = escapeXml(getSafeParam('reporter', '???'));
-  const contentRaw = getSafeParam('content', '본문 없음');
-  
-  // 댓글 파싱
-  const commentsRaw = getSafeParam('c', '');
+  // 댓글 파싱 (형식: 이름|텍스트|좋아요|싫어요|r)
+  const commentsRaw = url.searchParams.get('c') || '';
   const comments = [];
+  
   if (commentsRaw) {
     const items = commentsRaw.split('/./');
     for (let i = 0; i < Math.min(items.length, 6); i++) {
       const parts = items[i].split('|');
       comments.push({
-        name: escapeXml(parts[0] || ''),
-        text: escapeXml(parts[1] || ''),
-        like: escapeXml(parts[2] || ''),
-        dislike: escapeXml(parts[3] || ''),
+        name: parts[0] || '',
+        text: parts[1] || '',
+        like: parts[2] || '',
+        dislike: parts[3] || '',
         reply: parts[4] === 'r'
       });
     }
   }
 
+  // 색상 정의
   const textColor = '#1A6B6B';
   const deletedColor = '#AAAAAA';
 
+  // 프로필 색상 랜덤 생성
   function getRandomColor(name) {
     let hash = 0;
     for (let i = 0; i < name.length; i++) {
@@ -55,12 +39,14 @@ export async function onRequest(context) {
     return colors[Math.abs(hash) % colors.length];
   }
 
+  // 본문 줄바꿈 함수 (x=929 기준, 폰트 23px)
   function wrapText(text, maxWidth) {
     const lines = [];
     let currentLine = '';
     let currentWidth = 0;
+    
     for (const char of text) {
-      const charWidth = /[^\x00-\x7F]/.test(char) ? 23 : 13;
+      const charWidth = /[가-힣]/.test(char) ? 23 : 13;
       if (currentWidth + charWidth > maxWidth) {
         lines.push(currentLine);
         currentLine = char;
@@ -74,19 +60,19 @@ export async function onRequest(context) {
     return lines;
   }
 
-  const contentLines = wrapText(contentRaw, 834);
+  // 본문 SVG 생성
+  const contentLines = wrapText(content, 834); // 929 - 95 = 834
   let contentSvg = '';
   for (let i = 0; i < contentLines.length; i++) {
-    contentSvg += `<text x="95" y="${565 + (i * 30)}" fill="${textColor}" font-size="23" font-family="'Noto Sans KR', sans-serif" font-weight="400">${escapeXml(contentLines[i])}</text>`;
+    contentSvg += `<text x="95" y="${565 + (i * 30)}" fill="${textColor}" font-size="23" font-family="'Noto Sans KR', sans-serif" font-weight="400">${contentLines[i]}</text>`;
   }
 
+  // 댓글 생성 함수
   function createComment(name, text, like, dislike, isReply, y) {
     if (!name && !text) return '';
     const isDel = text.includes('운영정책 위반으로 삭제된 댓글입니다');
     const displayColor = isDel ? deletedColor : textColor;
-    
-    // 이모지 안전하게 첫 글자 따기 (Array.from 사용)
-    const firstChar = Array.from(name)[0] || '?';
+    const firstChar = name.charAt(0) || '?';
     const color = getRandomColor(name);
     
     const offsetX = isReply ? 40 : 0;
@@ -111,6 +97,7 @@ export async function onRequest(context) {
     `;
   }
 
+  // 댓글 SVG 생성
   let commentsY = 1550;
   let commentsSvg = '';
   for (let i = 0; i < comments.length; i++) {
@@ -118,27 +105,11 @@ export async function onRequest(context) {
     commentsSvg += createComment(c.name, c.text, c.like, c.dislike, c.reply, commentsY + (i * 75));
   }
 
-  // [수정됨] 배경 이미지 안전하게 불러오기 (Stack Overflow 방지)
-  let bgBase64 = '';
-  try {
-    const bgUrl = url.origin + '/news-bg.png';
-    const bgResponse = await fetch(bgUrl);
-    if (bgResponse.ok) {
-      const bgBuffer = await bgResponse.arrayBuffer();
-      const bytes = new Uint8Array(bgBuffer);
-      let binary = '';
-      // 큰 파일도 처리할 수 있도록 청크 단위로 처리
-      const chunkSize = 8192; 
-      for (let i = 0; i < bytes.length; i += chunkSize) {
-        binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunkSize));
-      }
-      bgBase64 = btoa(binary);
-    } else {
-      console.log('Background image not found');
-    }
-  } catch (e) {
-    console.error('Background load error:', e);
-  }
+  // 배경 이미지 로드
+  const bgUrl = url.origin + '/news-bg.png';
+  const bgResponse = await fetch(bgUrl);
+  const bgBuffer = await bgResponse.arrayBuffer();
+  const bgBase64 = btoa(String.fromCharCode(...new Uint8Array(bgBuffer)));
 
   const svg = `
     <svg width="1024" height="2048" viewBox="0 0 1024 2048" xmlns="http://www.w3.org/2000/svg">
@@ -148,15 +119,19 @@ export async function onRequest(context) {
         </style>
       </defs>
       
-      <!-- 배경 이미지가 있으면 표시, 없으면 회색 배경 (디버깅용) -->
-      ${bgBase64 
-        ? `<image href="data:image/png;base64,${bgBase64}" width="1024" height="2048"/>` 
-        : `<rect width="1024" height="2048" fill="#f0f0f0"/><text x="50" y="50" font-size="30" fill="red">이미지 로드 실패</text>`}
+      <!-- 배경 이미지 -->
+      <image href="data:image/png;base64,${bgBase64}" width="1024" height="2048"/>
       
+      <!-- 제목 -->
       <text x="95" y="480" fill="${textColor}" font-size="51" font-family="'Noto Sans KR', sans-serif" font-weight="700">${title}</text>
+      
+      <!-- 날짜 + 작성기자 (한 줄) -->
       <text x="720" y="530" fill="${textColor}" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${date} 작성기자| ${reporter}</text>
       
+      <!-- 본문 -->
       ${contentSvg}
+      
+      <!-- 댓글 섹션 -->
       ${commentsSvg}
     </svg>
   `;
