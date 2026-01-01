@@ -85,7 +85,7 @@ export async function onRequest(context) {
     
     let arrow = '';
     if (isReply) {
-      arrow = `<text x="100" y="${y + 5}" fill="${displayColor}" font-size="18" font-family="'Noto Sans KR', sans-serif">↳</text>`;
+      arrow = `<text x="105" y="${y + 4}" fill="${displayColor}" font-size="18" font-family="'Noto Sans KR', sans-serif">↳</text>`;
     }
     
     return `
