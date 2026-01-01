@@ -64,7 +64,7 @@ export async function onRequest(context) {
   const contentLines = wrapText(content, 834); // 929 - 95 = 834
   let contentSvg = '';
   for (let i = 0; i < contentLines.length; i++) {
-    contentSvg += `<text x="95" y="${555 + (i * 30)}" fill="${textColor}" font-size="23" font-family="'Noto Sans KR', sans-serif" font-weight="400">${contentLines[i]}</text>`;
+    contentSvg += `<text x="95" y="${565 + (i * 30)}" fill="${textColor}" font-size="23" font-family="'Noto Sans KR', sans-serif" font-weight="400">${contentLines[i]}</text>`;
   }
 
   // 댓글 생성 함수
@@ -79,20 +79,20 @@ export async function onRequest(context) {
     
     let likeText = '';
     if (!isReply && (like || dislike)) {
-      likeText = `<text x="${125 + offsetX}" y="${y + 32}" fill="${displayColor}" font-size="9" font-family="'Noto Sans KR', sans-serif" font-weight="400">👍 ${like || '0'} · 👎 ${dislike || '0'}</text>`;
+      likeText = `<text x="${125 + offsetX}" y="${y + 35}" fill="${displayColor}" font-size="12" font-family="'Noto Sans KR', sans-serif" font-weight="400">👍 ${like || '0'} · 👎 ${dislike || '0'}</text>`;
     }
     
     let arrow = '';
     if (isReply) {
-      arrow = `<text x="95" y="${y + 5}" fill="${displayColor}" font-size="14" font-family="'Noto Sans KR', sans-serif">↳</text>`;
+      arrow = `<text x="95" y="${y + 5}" fill="${displayColor}" font-size="17" font-family="'Noto Sans KR', sans-serif">↳</text>`;
     }
     
     return `
       ${arrow}
-      <circle cx="${95 + offsetX}" cy="${y}" r="18" fill="${color}"/>
-      <text x="${95 + offsetX}" y="${y + 5}" fill="white" font-size="13" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${firstChar}</text>
-      <text x="${125 + offsetX}" y="${y - 5}" fill="${displayColor}" font-size="16" font-family="'Noto Sans KR', sans-serif" font-weight="700">${name}</text>
-      <text x="${125 + offsetX}" y="${y + 15}" fill="${displayColor}" font-size="12" font-family="'Noto Sans KR', sans-serif" font-weight="400">${text}</text>
+      <circle cx="${95 + offsetX}" cy="${y}" r="20" fill="${color}"/>
+      <text x="${95 + offsetX}" y="${y + 6}" fill="white" font-size="16" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${firstChar}</text>
+      <text x="${125 + offsetX}" y="${y - 5}" fill="${displayColor}" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="700">${name}</text>
+      <text x="${125 + offsetX}" y="${y + 18}" fill="${displayColor}" font-size="15" font-family="'Noto Sans KR', sans-serif" font-weight="400">${text}</text>
       ${likeText}
     `;
   }
@@ -102,7 +102,7 @@ export async function onRequest(context) {
   let commentsSvg = '';
   for (let i = 0; i < comments.length; i++) {
     const c = comments[i];
-    commentsSvg += createComment(c.name, c.text, c.like, c.dislike, c.reply, commentsY + (i * 65));
+    commentsSvg += createComment(c.name, c.text, c.like, c.dislike, c.reply, commentsY + (i * 75));
   }
 
   // 배경 이미지 로드
