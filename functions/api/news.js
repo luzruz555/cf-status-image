@@ -106,10 +106,19 @@ export async function onRequest(context) {
   }
 
   // 배경 이미지 로드
-  const bgUrl = url.origin + '/news-bg.png';
+  const bgUrl = 'https://cf-status-image.pages.dev/news-bg.png';
   const bgResponse = await fetch(bgUrl);
   const bgBuffer = await bgResponse.arrayBuffer();
-  const bgBase64 = btoa(String.fromCharCode(...new Uint8Array(bgBuffer)));
+  
+  // 안전한 Base64 인코딩
+  const uint8Array = new Uint8Array(bgBuffer);
+  let binary = '';
+  const chunkSize = 8192;
+  for (let i = 0; i < uint8Array.length; i += chunkSize) {
+    const chunk = uint8Array.subarray(i, i + chunkSize);
+    binary += String.fromCharCode.apply(null, chunk);
+  }
+  const bgBase64 = btoa(binary);
 
   const svg = `
     <svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
