@@ -4,56 +4,66 @@ export async function onRequest(context) {
   const location = url.searchParams.get('location') || '???';
   const date = url.searchParams.get('date') || 'MM/DD';
   const time = url.searchParams.get('time') || 'HH:MM';
-  const job = url.searchParams.get('job') || '???';
   const faction = url.searchParams.get('faction') || '???';
+  const occupation = url.searchParams.get('occupation') || '???';
   const ability = url.searchParams.get('ability') || '???';
+  const incident = url.searchParams.get('incident') || '???';
   const char = url.searchParams.get('char') || '???';
   const emoji = url.searchParams.get('emoji') || '?';
   const relation = url.searchParams.get('relation') || '???';
-  const incident = url.searchParams.get('incident') || '???';
-
-  const factionDisplay = faction === 'ETERNAL ARKIVE' ? 'ETERNAL ARKIVE' : faction;
 
   const chars = char.split('.');
   const emojis = emoji.split('.');
   const relations = relation.split('.');
 
+  // 관계 텍스트 (두 열)
   let relationLines = '';
-for (let i = 0; i < chars.length; i++) {
-  let x, y;
-  if (i < 5) {
-    x = 230;
-    y = 230 + (i * 25);
-  } else {
-    x = 500;
-    y = 230 + ((i - 5) * 25);
+  for (let i = 0; i < chars.length; i++) {
+    let x, y;
+    if (i < 5) {
+      x = 600;
+      y = 380 + (i * 22);
+    } else {
+      x = 820;
+      y = 380 + ((i - 5) * 22);
+    }
+    const charName = chars[i].length > 6 ? chars[i].substring(0, 6) + '..' : chars[i];
+    const rel = (relations[i] || '???').length > 8 ? (relations[i] || '???').substring(0, 8) + '..' : (relations[i] || '???');
+    relationLines += `<text x="${x}" y="${y}" fill="#00FFFF" font-size="16" font-family="'Noto Sans KR', sans-serif" font-weight="400">${charName} | ${emojis[i] || '?'} | ${rel}</text>`;
   }
-  const charName = chars[i].length > 6 ? chars[i].substring(0, 6) + '..' : chars[i];
-  const rel = (relations[i] || '???').length > 10 ? (relations[i] || '???').substring(0, 10) + '..' : (relations[i] || '???');
-  relationLines += `<text x="${x}" y="${y}" fill="white" font-size="15" font-family="'Noto Sans KR', sans-serif" font-weight="200">${charName} | ${emojis[i] || '?'} | ${rel}</text>`;
-}
 
+  // 배경 이미지 로드
   const bgUrl = url.origin + '/status-bg.png';
   const bgResponse = await fetch(bgUrl);
   const bgBuffer = await bgResponse.arrayBuffer();
   const bgBase64 = btoa(String.fromCharCode(...new Uint8Array(bgBuffer)));
 
   const svg = `
-    <svg width="1024" height="436" viewBox="0 0 1024 436" xmlns="http://www.w3.org/2000/svg">
+    <svg width="1024" height="512" viewBox="0 0 1024 512" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <style>
-          @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;700&amp;display=swap');
+          @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&amp;display=swap');
         </style>
       </defs>
-      <image href="data:image/png;base64,${bgBase64}" width="1024" height="436"/>
-      <text x="30" y="123" fill="white" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="200">${location}</text>
-      <text x="335" y="123" fill="white" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="200">${date}</text>
-      <text x="485" y="123" fill="white" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="200">${time}</text>
-      <text x="637" y="123" fill="white" font-size="22" font-family="'Noto Sans KR', sans-serif" font-weight="200">${job}</text>
-      <text x="113" y="266" fill="white" font-size="30" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${factionDisplay}</text>
-      <text x="113" y="304" fill="white" font-size="15" font-family="'Noto Sans KR', sans-serif" font-weight="200" text-anchor="middle">${ability}</text>
+      
+      <!-- 배경 이미지 -->
+      <image href="data:image/png;base64,${bgBase64}" width="1024" height="512"/>
+      
+      <!-- 왼쪽 상단: LOC, DATE, TIME -->
+      <text x="95" y="45" fill="#00FFFF" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${location}</text>
+      <text x="95" y="70" fill="#00FFFF" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${date}</text>
+      <text x="95" y="95" fill="#00FFFF" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${time}</text>
+      
+      <!-- 왼쪽 박스: FACTION -->
+      <text x="145" y="295" fill="#00FFFF" font-size="20" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${faction}</text>
+      
+      <!-- 오른쪽 상단: OCCUPATION, ABILITY, INCIDENT -->
+      <text x="600" y="55" fill="#00FFFF" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${occupation}</text>
+      <text x="600" y="105" fill="#00FFFF" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${ability}</text>
+      <text x="600" y="165" fill="#00FFFF" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="400">${incident}</text>
+      
+      <!-- 오른쪽 하단: RELATIONSHIP -->
       ${relationLines}
-      <text x="236" y="396" fill="white" font-size="17" font-family="'Noto Sans KR', sans-serif" font-weight="200">${incident}</text>
     </svg>
   `;
 
