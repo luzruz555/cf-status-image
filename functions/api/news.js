@@ -8,7 +8,6 @@ export async function onRequest(context) {
   const content = url.searchParams.get('content') || '본문 없음';
 
   // 댓글 파싱 (형식: 이름|텍스트|좋아요|싫어요|r)
-  // 예: c=유저1|안녕|5|1.유저2|대댓글|||r.유저3|댓글|3|0
   const commentsRaw = url.searchParams.get('c') || '';
   const comments = [];
   
@@ -38,6 +37,34 @@ export async function onRequest(context) {
     }
     const colors = ['#5BB5B5', '#808080', '#C27070', '#6B6B6B', '#A0A060', '#2D7070', '#7070A0', '#A06060', '#60A060', '#A080A0'];
     return colors[Math.abs(hash) % colors.length];
+  }
+
+  // 본문 줄바꿈 함수 (x=929 기준, 폰트 23px)
+  function wrapText(text, maxWidth) {
+    const lines = [];
+    let currentLine = '';
+    let currentWidth = 0;
+    
+    for (const char of text) {
+      const charWidth = /[가-힣]/.test(char) ? 23 : 13;
+      if (currentWidth + charWidth > maxWidth) {
+        lines.push(currentLine);
+        currentLine = char;
+        currentWidth = charWidth;
+      } else {
+        currentLine += char;
+        currentWidth += charWidth;
+      }
+    }
+    if (currentLine) lines.push(currentLine);
+    return lines;
+  }
+
+  // 본문 SVG 생성
+  const contentLines = wrapText(content, 834); // 929 - 95 = 834
+  let contentSvg = '';
+  for (let i = 0; i < contentLines.length; i++) {
+    contentSvg += `<text x="95" y="${555 + (i * 30)}" fill="${textColor}" font-size="23" font-family="'Noto Sans KR', sans-serif" font-weight="400">${contentLines[i]}</text>`;
   }
 
   // 댓글 생성 함수
@@ -98,14 +125,11 @@ export async function onRequest(context) {
       <!-- 제목 -->
       <text x="95" y="480" fill="${textColor}" font-size="51" font-family="'Noto Sans KR', sans-serif" font-weight="700">${title}</text>
       
-      <!-- 날짜 -->
-      <text x="750" y="450" fill="${textColor}" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400">${date}</text>
-      
-      <!-- 작성 기자 -->
-      <text x="750" y="480" fill="${textColor}" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400">작성 기자: ${reporter}</text>
+      <!-- 날짜 + 작성기자 (한 줄) -->
+      <text x="95" y="520" fill="${textColor}" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400">${date} 작성기자| ${reporter}</text>
       
       <!-- 본문 -->
-      <text x="95" y="555" fill="${textColor}" font-size="21" font-family="'Noto Sans KR', sans-serif" font-weight="400">${content}</text>
+      ${contentSvg}
       
       <!-- 댓글 섹션 -->
       ${commentsSvg}
