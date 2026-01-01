@@ -123,7 +123,7 @@ export async function onRequest(context) {
       <image href="data:image/png;base64,${bgBase64}" width="1024" height="2048"/>
       
       <!-- 제목 -->
-      <text x="95" y="480" fill="${textColor}" font-size="51" font-family="'Noto Sans KR', sans-serif" font-weight="700">${title}</text>
+      <text x="95" y="480" fill="${textColor}" font-size="34" font-family="'Noto Sans KR', sans-serif" font-weight="1100">${title}</text>
       
       <!-- 날짜 + 작성기자 (한 줄) -->
       <text x="720" y="530" fill="${textColor}" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${date} 작성기자| ${reporter}</text>
