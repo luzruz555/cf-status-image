@@ -7,15 +7,23 @@ export async function onRequest(context) {
   const reporter = url.searchParams.get('reporter') || '???';
   const content = url.searchParams.get('content') || '본문 없음';
 
-  // 댓글 1~6
+  // 댓글 파싱 (형식: 이름|텍스트|좋아요|싫어요|r)
+  // 예: c=유저1|안녕|5|1.유저2|대댓글|||r.유저3|댓글|3|0
+  const commentsRaw = url.searchParams.get('c') || '';
   const comments = [];
-  for (let i = 1; i <= 6; i++) {
-    comments.push({
-      name: url.searchParams.get(`c${i}_name`) || '',
-      text: url.searchParams.get(`c${i}_text`) || '',
-      like: url.searchParams.get(`c${i}_like`) || '',
-      dislike: url.searchParams.get(`c${i}_dislike`) || ''
-    });
+  
+  if (commentsRaw) {
+    const items = commentsRaw.split('.');
+    for (let i = 0; i < Math.min(items.length, 6); i++) {
+      const parts = items[i].split('|');
+      comments.push({
+        name: parts[0] || '',
+        text: parts[1] || '',
+        like: parts[2] || '',
+        dislike: parts[3] || '',
+        reply: parts[4] === 'r'
+      });
+    }
   }
 
   // 색상 정의
@@ -33,34 +41,41 @@ export async function onRequest(context) {
   }
 
   // 댓글 생성 함수
-  function createComment(name, text, like, dislike, y) {
+  function createComment(name, text, like, dislike, isReply, y) {
     if (!name && !text) return '';
     const isDel = text.includes('운영정책 위반으로 삭제된 댓글입니다');
     const displayColor = isDel ? deletedColor : textColor;
     const firstChar = name.charAt(0) || '?';
     const color = getRandomColor(name);
     
-    // 좋아요/싫어요 (값 있을 때만 표시)
+    const offsetX = isReply ? 40 : 0;
+    
     let likeText = '';
-    if (like || dislike) {
-      likeText = `<text x="125" y="${y + 32}" fill="${displayColor}" font-size="6" font-family="'Noto Sans KR', sans-serif" font-weight="400">👍 ${like || '0'} · 👎 ${dislike || '0'}</text>`;
+    if (!isReply && (like || dislike)) {
+      likeText = `<text x="${125 + offsetX}" y="${y + 32}" fill="${displayColor}" font-size="6" font-family="'Noto Sans KR', sans-serif" font-weight="400">👍 ${like || '0'} · 👎 ${dislike || '0'}</text>`;
+    }
+    
+    let arrow = '';
+    if (isReply) {
+      arrow = `<text x="95" y="${y + 5}" fill="${displayColor}" font-size="14" font-family="'Noto Sans KR', sans-serif">↳</text>`;
     }
     
     return `
-      <circle cx="95" cy="${y}" r="18" fill="${color}"/>
-      <text x="95" y="${y + 5}" fill="white" font-size="13" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${firstChar}</text>
-      <text x="125" y="${y - 5}" fill="${displayColor}" font-size="15" font-family="'Noto Sans KR', sans-serif" font-weight="700">${name}</text>
-      <text x="125" y="${y + 15}" fill="${displayColor}" font-size="11" font-family="'Noto Sans KR', sans-serif" font-weight="400">${text}</text>
+      ${arrow}
+      <circle cx="${95 + offsetX}" cy="${y}" r="18" fill="${color}"/>
+      <text x="${95 + offsetX}" y="${y + 5}" fill="white" font-size="13" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${firstChar}</text>
+      <text x="${125 + offsetX}" y="${y - 5}" fill="${displayColor}" font-size="16" font-family="'Noto Sans KR', sans-serif" font-weight="700">${name}</text>
+      <text x="${125 + offsetX}" y="${y + 15}" fill="${displayColor}" font-size="12" font-family="'Noto Sans KR', sans-serif" font-weight="400">${text}</text>
       ${likeText}
     `;
   }
 
   // 댓글 SVG 생성
-  let commentsY = 1670;
+  let commentsY = 1640;
   let commentsSvg = '';
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < comments.length; i++) {
     const c = comments[i];
-    commentsSvg += createComment(c.name, c.text, c.like, c.dislike, commentsY + (i * 70));
+    commentsSvg += createComment(c.name, c.text, c.like, c.dislike, c.reply, commentsY + (i * 70));
   }
 
   // 배경 이미지 로드
@@ -81,16 +96,16 @@ export async function onRequest(context) {
       <image href="data:image/png;base64,${bgBase64}" width="1024" height="2048"/>
       
       <!-- 제목 -->
-      <text x="95" y="530" fill="${textColor}" font-size="51" font-family="'Noto Sans KR', sans-serif" font-weight="700">${title}</text>
+      <text x="95" y="500" fill="${textColor}" font-size="51" font-family="'Noto Sans KR', sans-serif" font-weight="700">${title}</text>
       
       <!-- 날짜 -->
-      <text x="750" y="500" fill="${textColor}" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400">${date}</text>
+      <text x="750" y="470" fill="${textColor}" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400">${date}</text>
       
       <!-- 작성 기자 -->
-      <text x="750" y="530" fill="${textColor}" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400">작성 기자: ${reporter}</text>
+      <text x="750" y="500" fill="${textColor}" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400">작성 기자: ${reporter}</text>
       
       <!-- 본문 -->
-      <text x="95" y="620" fill="${textColor}" font-size="21" font-family="'Noto Sans KR', sans-serif" font-weight="400">${content}</text>
+      <text x="95" y="590" fill="${textColor}" font-size="21" font-family="'Noto Sans KR', sans-serif" font-weight="400">${content}</text>
       
       <!-- 댓글 섹션 -->
       ${commentsSvg}
