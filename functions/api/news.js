@@ -39,14 +39,14 @@ export async function onRequest(context) {
     return colors[Math.abs(hash) % colors.length];
   }
 
-  // 본문 줄바꿈 함수 (x=929 기준, 폰트 23px)
+  // 본문 줄바꿈 함수
   function wrapText(text, maxWidth) {
     const lines = [];
     let currentLine = '';
     let currentWidth = 0;
     
     for (const char of text) {
-      const charWidth = /[가-힣]/.test(char) ? 23 : 13;
+      const charWidth = /[가-힣]/.test(char) ? 18 : 10;
       if (currentWidth + charWidth > maxWidth) {
         lines.push(currentLine);
         currentLine = char;
@@ -61,10 +61,10 @@ export async function onRequest(context) {
   }
 
   // 본문 SVG 생성
-  const contentLines = wrapText(content, 834); // 929 - 95 = 834
+  const contentLines = wrapText(content, 550);
   let contentSvg = '';
   for (let i = 0; i < contentLines.length; i++) {
-    contentSvg += `<text x="95" y="${565 + (i * 30)}" fill="${textColor}" font-size="23" font-family="'Noto Sans KR', sans-serif" font-weight="400">${contentLines[i]}</text>`;
+    contentSvg += `<text x="60" y="${270 + (i * 24)}" fill="${textColor}" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400">${contentLines[i]}</text>`;
   }
 
   // 댓글 생성 함수
@@ -75,34 +75,34 @@ export async function onRequest(context) {
     const firstChar = name.charAt(0) || '?';
     const color = getRandomColor(name);
     
-    const offsetX = isReply ? 40 : 0;
+    const offsetX = isReply ? 30 : 0;
     
     let likeText = '';
     if (!isReply && (like || dislike)) {
-      likeText = `<text x="${125 + offsetX}" y="${y + 35}" fill="${displayColor}" font-size="12" font-family="'Noto Sans KR', sans-serif" font-weight="400">👍 ${like || '0'} · 👎 ${dislike || '0'}</text>`;
+      likeText = `<text x="${95 + offsetX}" y="${y + 28}" fill="${displayColor}" font-size="10" font-family="'Noto Sans KR', sans-serif" font-weight="400">👍 ${like || '0'} · 👎 ${dislike || '0'}</text>`;
     }
     
     let arrow = '';
     if (isReply) {
-      arrow = `<text x="95" y="${y + 5}" fill="${displayColor}" font-size="17" font-family="'Noto Sans KR', sans-serif">↳</text>`;
+      arrow = `<text x="60" y="${y + 4}" fill="${displayColor}" font-size="12" font-family="'Noto Sans KR', sans-serif">↳</text>`;
     }
     
     return `
       ${arrow}
-      <circle cx="${95 + offsetX}" cy="${y}" r="20" fill="${color}"/>
-      <text x="${95 + offsetX}" y="${y + 6}" fill="white" font-size="16" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${firstChar}</text>
-      <text x="${125 + offsetX}" y="${y - 5}" fill="${displayColor}" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="700">${name}</text>
-      <text x="${125 + offsetX}" y="${y + 18}" fill="${displayColor}" font-size="15" font-family="'Noto Sans KR', sans-serif" font-weight="400">${text}</text>
+      <circle cx="${75 + offsetX}" cy="${y}" r="14" fill="${color}"/>
+      <text x="${75 + offsetX}" y="${y + 5}" fill="white" font-size="11" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${firstChar}</text>
+      <text x="${95 + offsetX}" y="${y - 3}" fill="${displayColor}" font-size="14" font-family="'Noto Sans KR', sans-serif" font-weight="700">${name}</text>
+      <text x="${95 + offsetX}" y="${y + 13}" fill="${displayColor}" font-size="11" font-family="'Noto Sans KR', sans-serif" font-weight="400">${text}</text>
       ${likeText}
     `;
   }
 
   // 댓글 SVG 생성
-  let commentsY = 1550;
+  let commentsY = 770;
   let commentsSvg = '';
   for (let i = 0; i < comments.length; i++) {
     const c = comments[i];
-    commentsSvg += createComment(c.name, c.text, c.like, c.dislike, c.reply, commentsY + (i * 75));
+    commentsSvg += createComment(c.name, c.text, c.like, c.dislike, c.reply, commentsY + (i * 55));
   }
 
   // 배경 이미지 로드
@@ -112,7 +112,7 @@ export async function onRequest(context) {
   const bgBase64 = btoa(String.fromCharCode(...new Uint8Array(bgBuffer)));
 
   const svg = `
-    <svg width="1024" height="2048" viewBox="0 0 1024 2048" xmlns="http://www.w3.org/2000/svg">
+    <svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <style>
           @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&amp;display=swap');
@@ -120,13 +120,13 @@ export async function onRequest(context) {
       </defs>
       
       <!-- 배경 이미지 -->
-      <image href="data:image/png;base64,${bgBase64}" width="1024" height="2048"/>
+      <image href="data:image/png;base64,${bgBase64}" width="1024" height="1024"/>
       
       <!-- 제목 -->
-      <text x="95" y="480" fill="${textColor}" font-size="34" font-family="'Noto Sans KR', sans-serif" font-weight="1100">${title}</text>
+      <text x="60" y="210" fill="${textColor}" font-size="32" font-family="'Noto Sans KR', sans-serif" font-weight="700">${title}</text>
       
-      <!-- 날짜 + 작성기자 (한 줄) -->
-      <text x="720" y="530" fill="${textColor}" font-size="18" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${date} 작성기자| ${reporter}</text>
+      <!-- 날짜 + 작성기자 -->
+      <text x="60" y="240" fill="${textColor}" font-size="14" font-family="'Noto Sans KR', sans-serif" font-weight="400">${date} 작성기자| ${reporter}</text>
       
       <!-- 본문 -->
       ${contentSvg}
