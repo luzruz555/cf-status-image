@@ -52,7 +52,7 @@ export async function onRequest(context) {
     
     let likeText = '';
     if (!isReply && (like || dislike)) {
-      likeText = `<text x="${125 + offsetX}" y="${y + 32}" fill="${displayColor}" font-size="8" font-family="'Noto Sans KR', sans-serif" font-weight="400">👍 ${like || '0'} · 👎 ${dislike || '0'}</text>`;
+      likeText = `<text x="${125 + offsetX}" y="${y + 32}" fill="${displayColor}" font-size="9" font-family="'Noto Sans KR', sans-serif" font-weight="400">👍 ${like || '0'} · 👎 ${dislike || '0'}</text>`;
     }
     
     let arrow = '';
@@ -75,7 +75,7 @@ export async function onRequest(context) {
   let commentsSvg = '';
   for (let i = 0; i < comments.length; i++) {
     const c = comments[i];
-    commentsSvg += createComment(c.name, c.text, c.like, c.dislike, c.reply, commentsY + (i * 70));
+    commentsSvg += createComment(c.name, c.text, c.like, c.dislike, c.reply, commentsY + (i * 50));
   }
 
   // 배경 이미지 로드
