@@ -50,9 +50,9 @@ export async function onRequest(context) {
       <image href="data:image/png;base64,${bgBase64}" width="1024" height="512"/>
       
       <!-- 왼쪽 상단: LOC, DATE, TIME -->
-      <text x="127" y="58" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${location}</text>
-      <text x="127" y="84" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${date}</text>
-      <text x="127" y="110" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${time}</text>
+      <text x="130" y="60" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${location}</text>
+      <text x="130" y="86" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${date}</text>
+      <text x="130" y="112" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${time}</text>
       
       <!-- 왼쪽 박스: FACTION -->
       <text x="145" y="260" fill="white" font-size="27" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle">${faction}</text>
@@ -60,7 +60,7 @@ export async function onRequest(context) {
       <!-- 오른쪽 상단: OCCUPATION, ABILITY, INCIDENT -->
       <text x="605" y="80" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${occupation}</text>
       <text x="605" y="135" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${ability}</text>
-      <text x="605" y="190" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400">${incident}</text>      
+      <text x="605" y="193" fill="white" font-size="18.5" font-family="'Noto Sans KR', sans-serif" font-weight="400">${incident}</text>      
       <!-- 오른쪽 하단: RELATIONSHIP -->
       ${relationLines}
     </svg>
