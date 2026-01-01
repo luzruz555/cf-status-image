@@ -52,7 +52,7 @@ export async function onRequest(context) {
     
     let likeText = '';
     if (!isReply && (like || dislike)) {
-      likeText = `<text x="${125 + offsetX}" y="${y + 32}" fill="${displayColor}" font-size="6" font-family="'Noto Sans KR', sans-serif" font-weight="400">👍 ${like || '0'} · 👎 ${dislike || '0'}</text>`;
+      likeText = `<text x="${125 + offsetX}" y="${y + 32}" fill="${displayColor}" font-size="8" font-family="'Noto Sans KR', sans-serif" font-weight="400">👍 ${like || '0'} · 👎 ${dislike || '0'}</text>`;
     }
     
     let arrow = '';
@@ -71,7 +71,7 @@ export async function onRequest(context) {
   }
 
   // 댓글 SVG 생성
-  let commentsY = 1640;
+  let commentsY = 1610;
   let commentsSvg = '';
   for (let i = 0; i < comments.length; i++) {
     const c = comments[i];
