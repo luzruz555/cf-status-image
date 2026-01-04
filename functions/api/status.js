@@ -58,7 +58,7 @@ export async function onRequest(context) {
       <text x="145" y="270" fill="white" font-size="30" font-family="'Noto Sans KR', sans-serif" font-weight="700" text-anchor="middle" fill-opacity="0.85">${faction}</text>
       
       <!-- 오른쪽 상단: OCCUPATION, ABILITY, INCIDENT -->
-      <text x="605" y="83" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${job$</text>
+      <text x="605" y="83" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${job}</text>
       <text x="605" y="135" fill="white" font-size="19" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${ability}</text>
       <text x="605" y="193" fill="white" font-size="18.5" font-family="'Noto Sans KR', sans-serif" font-weight="400" fill-opacity="0.85">${incident}</text>      
       <!-- 오른쪽 하단: RELATIONSHIP -->
