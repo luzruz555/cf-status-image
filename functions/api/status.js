@@ -5,7 +5,7 @@ export async function onRequest(context) {
   const date = url.searchParams.get('date') || 'MM/DD';
   const time = url.searchParams.get('time') || 'HH:MM';
   const faction = url.searchParams.get('faction') || '???';
-  const job = url.searchParams.get('job'' || '???';
+  const job = url.searchParams.get('job') || '???';
   const ability = url.searchParams.get('ability') || '???';
   const incident = url.searchParams.get('incident') || '???';
   const char = url.searchParams.get('char') || '???';
