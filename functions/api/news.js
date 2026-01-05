@@ -1,14 +1,15 @@
 export async function onRequest(context) {
   const url = new URL(context.request.url);
 
-  // 기본 정보 - decodeURIComponent 추가
-  const title = decodeURIComponent(url.searchParams.get('title') || '제목 없음');
-  const date = decodeURIComponent(url.searchParams.get('date') || '3125.??.??');
-  const reporter = decodeURIComponent(url.searchParams.get('reporter') || '???');
-  const content = decodeURIComponent(url.searchParams.get('content') || '본문 없음');
+  // 기본 정보
+  const title = url.searchParams.get('title') || '제목 없음';
+  const date = url.searchParams.get('date') || '3125.??.??';
+  const reporter = url.searchParams.get('reporter') || '???';
+  const content = url.searchParams.get('content') || '본문 없음';
 
-  // 댓글 파싱 - 여기도 추가
-  const commentsRaw = decodeURIComponent(url.searchParams.get('c') || '');
+  // 댓글 파싱
+  const commentsRaw = url.searchParams.get('c') || '';
+  const comments = [];
   
   // 댓글 파싱 - 최대 4개로 변경
   if (commentsRaw) {
